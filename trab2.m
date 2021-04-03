@@ -70,5 +70,37 @@ ylabel('Amplitude em (dB) do sinal com o ruido');
 %% seletivo em freqüência. Qual o tipo de filtro (PB, PA, PF ou RF) parece ser o mais
 %% adequado para este caso? Qual parece ser a freqüência de corte ideal para este caso?
 
+%Filtro PB
+
+%% 5-) Utilizando a função butter, obtenha os coeficientes do filtro sugerido no item 4.
+%% Visualize a resposta em fase e a resposta em magnitude deste filtro. Se necessário,
+%% repita a operação até encontrar o filtro que lhe pareça o mais adequado possível. [freqz,
+%% abs, angle, unwrap]
+
+wc = 3200/(Fs/2);
+[b,a] = butter(10,wc);
+[h,w] = freqz(b,a,length(y));
+
+figure;
+plot(w,abs(unwrap(angle(h))));
+figure;
+plot(w,unwrap(abs(h)));
+
+figure;
+impz(b,a);
+
+%% 6-) Trace os diagramas de zeros e pólos do filtro utilizado no item 5 [zplane]. Quais
+%% informações relevantes podem ser tiradas a partir deste gráfico?
+
+figure,
+zplane(b,a)
+
+%% 7-) Repita os itens 5 e 6 usando a função fvtool
+
+fvtool(w,h);
+fvtool(b,a);
+
+%%8-) Filtre o sinal de áudio ruidoso com o filtro obtido no item 5 [filter]. Visualize este sinal
+%% no tempo, assim como o módulo e a fase de sua Transformadas de Fourier.
 
 
