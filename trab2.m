@@ -1,3 +1,7 @@
+%% Nome: Stefane Adna dos Santos
+%% Matricula: 403249
+%% Processamento Digital de Sinais
+
 clc;
 close;
 clear;
@@ -17,6 +21,7 @@ load chirp.mat;
 %plotando o sinal
 figure;
 plot(y);
+title ('Questão 01');
 xlabel('Tempo Discreto');
 ylabel('Amplitude do sinal Chirp.mat');
 
@@ -30,6 +35,7 @@ yw = 20*log10(abs(yw));
 
 figure;
 plot(freq, yw);
+title ('Questão 02');
 ylabel('Amplitude em (dB)');
 xlabel('Frquencia em rad/s');
 
@@ -50,6 +56,7 @@ figure;
 hold;
 plot(tempo_vec, y_ruido);
 plot(tempo_vec, y);
+title ('Questão 03, parte 01');
 xlabel('Tempo em seg');
 ylabel('Amplitude em (dB) do sinal com o ruido');
 
@@ -62,6 +69,7 @@ figure;
 hold;
 plot(freq, yw_ruido);
 plot(freq, yw);
+title ('Questão 03, parte 02');
 xlabel('Frquencia em rad/s');
 ylabel('Amplitude em (dB) do sinal com o ruido');
 
@@ -84,8 +92,10 @@ wc = 3200/(Fs/2);
 
 figure;
 plot(w,abs(unwrap(angle(h))));
+title ('Questão 05, parte 01');
 figure;
 plot(w,unwrap(abs(h)));
+title ('Questão 05, parte 02');
 
 figure;
 impz(b,a);
@@ -93,8 +103,9 @@ impz(b,a);
 %% 6-) Trace os diagramas de zeros e pólos do filtro utilizado no item 5 [zplane]. Quais
 %% informações relevantes podem ser tiradas a partir deste gráfico?
 
-figure,
-zplane(b,a)
+figure;
+zplane(b,a);
+title ('Questão 06');
 
 %% 7-) Repita os itens 5 e 6 usando a função fvtool
 
@@ -107,6 +118,7 @@ fvtool(b,a);
 y_f = filter(b,a,y_ruido); %sinal filtrado
 figure;
 plot(real(y_f));
+title ('Questão 08, parte 01');
 xlabel('Tempo Discreto');
 ylabel('Amplitude do sinal que foi filtrado');
 
@@ -114,15 +126,17 @@ yw_f = abs(fftshift(fft(y_f)));
 freq_vec = linspace(-pi,pi,length(yw_f));
 figure;
 plot(freq_vec,yw_f);
+title ('Questão 08, parte 02');
 xlabel('Frquencia em rad/s');
 ylabel('Espectro de magnitude do sinal que foi filtrado'); 
 
 yw_fase = fftshift(fft(y_f));
 figure;
 plot(freq_vec,unwrap(angle(yw_fase)));
+title ('Questão 08, parte 03');
 xlabel('Frquencia em rad/s');
 ylabel('Resposta em fase do sinal que foi filtrado');
 
 %% 9-) Escute o sinal filtrado utilizando a função sound, na freqüência Fs. O que é
 %% observado?
-sound(y_f,Fs);
+%sound(y_f,Fs);
