@@ -28,7 +28,7 @@ ylabel('Amplitude do sinal Chirp.mat');
 
 %% 2-) Visualize este sinal no tempo, assim como o módulo (em dB) e a fase de sua
 %% Transformada de Fourier. [figure, plot, fft, fftshift, abs, angle, unwrap, linspace].
-yw = fftshift(fft(y));% resposta em frequencia
+yw = fftshift(fft(y));
 freq = linspace(-pi,pi,length(y));
 
 yw = 20*log10(abs(yw));
@@ -88,7 +88,7 @@ ylabel('Amplitude em (dB) do sinal com o ruido');
 
 wc = 3200/(Fs/2);
 [b,a] = butter(10,wc);
-[h,w] = freqz(b,a,length(y));
+[h,w] = freqz(b,a);
 
 figure;
 plot(w,abs(unwrap(angle(h))));
@@ -140,3 +140,4 @@ ylabel('Resposta em fase do sinal que foi filtrado');
 %% 9-) Escute o sinal filtrado utilizando a função sound, na freqüência Fs. O que é
 %% observado?
 %sound(y_f,Fs);
+% Pode-se ouvir o canto do passaro e um leve som de ruido no fundo
