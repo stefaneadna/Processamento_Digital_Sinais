@@ -39,10 +39,11 @@ xlabel('Frquencia em rad/s');
 %% freqüência Fs.
 
 tempo_vec = (1:length(y))/Fs;
-ruido_branco = randn(size(y));
+ruido_branco = wgn(13129,1,randn*sqrt(0.1),0.01);
+
 
 % Adicionando ruido
-y_ruido = y + ruido_branco*sqrt(1);
+y_ruido = y + ruido_branco;
 
 %Ruido + sinal do som
 figure;
@@ -70,7 +71,7 @@ ylabel('Amplitude em (dB) do sinal com o ruido');
 %% seletivo em freqüência. Qual o tipo de filtro (PB, PA, PF ou RF) parece ser o mais
 %% adequado para este caso? Qual parece ser a freqüência de corte ideal para este caso?
 
-%Filtro PB
+%Filtro PB com wc = 3200/(Fs/2)
 
 %% 5-) Utilizando a função butter, obtenha os coeficientes do filtro sugerido no item 4.
 %% Visualize a resposta em fase e a resposta em magnitude deste filtro. Se necessário,
@@ -103,4 +104,25 @@ fvtool(b,a);
 %%8-) Filtre o sinal de áudio ruidoso com o filtro obtido no item 5 [filter]. Visualize este sinal
 %% no tempo, assim como o módulo e a fase de sua Transformadas de Fourier.
 
+y_f = filter(b,a,y_ruido); %sinal filtrado
+figure;
+plot(real(y_f));
+xlabel('Tempo Discreto');
+ylabel('Amplitude do sinal que foi filtrado');
 
+yw_f = abs(fftshift(fft(y_f)));
+freq_vec = linspace(-pi,pi,length(yw_f));
+figure;
+plot(freq_vec,yw_f);
+xlabel('Frquencia em rad/s');
+ylabel('Espectro de magnitude do sinal que foi filtrado'); 
+
+yw_fase = fftshift(fft(y_f));
+figure;
+plot(freq_vec,unwrap(angle(yw_fase)));
+xlabel('Frquencia em rad/s');
+ylabel('Resposta em fase do sinal que foi filtrado');
+
+%% 9-) Escute o sinal filtrado utilizando a função sound, na freqüência Fs. O que é
+%% observado?
+sound(y_f,Fs);
